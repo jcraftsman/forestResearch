@@ -9,7 +9,7 @@ python get-pip.py
 sudo pip install virtualenv
 brew install python3
 ```
-### RUN INTO A VIRTUALENV
+## Launch it into a venv
 ```
 virtualenv -p /usr/local/bin/python3 venv
 . venv/bin/activate
