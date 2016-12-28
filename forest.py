@@ -19,6 +19,7 @@ data_train = np.asarray(list_train)
 data_train = np.concatenate(data_train)
 Y_train = data_train[:, forest_type_index]
 X_train = data_train[:, 0:forest_type_index]
+Y = np_utils.to_categorical(np.add(Y,-1), 7)
 list_test = [list_by_forest_types[i][int(train_ratio*list_by_forest_types[i].size/line_size):int(list_by_forest_types[i].size/line_size)] for i in range(0,7)]
 data_test = np.asarray(list_test)
 data_test = np.concatenate(data_test)
