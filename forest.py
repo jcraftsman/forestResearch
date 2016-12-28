@@ -18,22 +18,31 @@ data_train = np.asarray(list_train)
 data_train = np.concatenate(data_train)
 Y_train = data_train[:, forest_type_index]
 X_train = data_train[:, 0:forest_type_index]
+Y_train = np_utils.to_categorical(np.add(Y_train,-1), 7)
+Y = np_utils.to_categorical(np.add(Y,-1), 7)
 
 model = Sequential()
-model.add(Dense(dim, input_dim=dim))
+model.add(Dense(512, input_dim=dim, init='he_normal'))
 model.add(BatchNormalization())
-model.add(Dense(128))
-model.add(Activation('relu'))
-model.add(Dense(256))
 model.add(Activation('tanh'))
-model.add(Dense(7))
+model.add(Dropout(0.5))
+model.add(Dense(512, init='he_normal'))
+model.add(BatchNormalization())
+model.add(Activation('tanh'))
+model.add(Dropout(0.5))
+model.add(Dense(7, init='he_normal'))
+model.add(BatchNormalization())
 model.add(Activation('softmax'))
 
 model.summary()
 
-model.compile(loss='sparse_categorical_crossentropy',
-              optimizer="sgd",
+model.compile(loss='categorical_crossentropy',
+              optimizer="adam",
               metrics=['accuracy'],
-              )
+)                    
+            
+fitter = model.fit(X_train,Y_train,batch_size=128, nb_epoch=10,
+                   verbose=2, validation_data=(X, Y))
+
 elapsed_time = time.time() - start_time
 print("Execution time: %.3f sec." % elapsed_time)
