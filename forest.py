@@ -1,7 +1,9 @@
+import time
 import numpy as np
 from keras.layers import *
 from keras.models import Sequential
 
+start_time = time.time()
 data_set = np.loadtxt('data/covtype.data', delimiter=',')
 forest_type_index = 54
 Y = data_set[:, forest_type_index]
@@ -33,3 +35,5 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer="sgd",
               metrics=['accuracy'],
               )
+elapsed_time = time.time() - start_time
+print("Execution time: %.3f sec." % elapsed_time)
