@@ -2,6 +2,7 @@ import time
 import numpy as np
 from keras.layers import *
 from keras.models import Sequential
+from keras.utils import np_utils
 
 start_time = time.time()
 data_set = np.loadtxt('data/covtype.data', delimiter=',')
