@@ -1,5 +1,5 @@
-import time
 import numpy as np
+import time
 from keras.layers import *
 from keras.models import Sequential
 from keras.utils import np_utils
@@ -19,14 +19,16 @@ data_train = np.asarray(list_train)
 data_train = np.concatenate(data_train)
 Y_train = data_train[:, forest_type_index]
 X_train = data_train[:, 0:forest_type_index]
-Y = np_utils.to_categorical(np.add(Y,-1), 7)
-list_test = [list_by_forest_types[i][int(train_ratio*list_by_forest_types[i].size/line_size):int(list_by_forest_types[i].size/line_size)] for i in range(0,7)]
+Y = np_utils.to_categorical(np.add(Y, -1), 7)
+list_test = [list_by_forest_types[i][
+             int(train_ratio * list_by_forest_types[i].size / line_size):int(list_by_forest_types[i].size / line_size)]
+             for i in range(0, 7)]
 data_test = np.asarray(list_test)
 data_test = np.concatenate(data_test)
-Y_test = data_test[:,forest_type_index]
-X_test = data_test[:,0:forest_type_index]
+Y_test = data_test[:, forest_type_index]
+X_test = data_test[:, 0:forest_type_index]
 
-Y_test = np_utils.to_categorical(np.add(Y_test,-1), 7)
+Y_test = np_utils.to_categorical(np.add(Y_test, -1), 7)
 
 model = Sequential()
 model.add(Dense(512, input_dim=dim, init='he_normal'))
@@ -46,9 +48,9 @@ model.summary()
 model.compile(loss='categorical_crossentropy',
               optimizer="adam",
               metrics=['accuracy'],
-)
+              )
 
-fitter = model.fit(X_train,Y_train,batch_size=128, nb_epoch=10,
+fitter = model.fit(X_train, Y_train, batch_size=128, nb_epoch=10,
                    verbose=2, validation_data=(X, Y))
 
 elapsed_time = time.time() - start_time
